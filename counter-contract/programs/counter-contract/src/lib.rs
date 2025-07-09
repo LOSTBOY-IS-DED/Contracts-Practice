@@ -35,7 +35,7 @@ pub mod counter_contract {
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
-    #[account(init , payer = user , space = 8 + 8 + 32)]
+    #[account(init, payer = user, space = 8 + 8 + 32, seeds = [b"counter", user.key().as_ref()], bump)]
     pub counter: Account<'info, Counter>,
     #[account(mut)]
     pub user: Signer<'info>,

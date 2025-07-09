@@ -6,6 +6,7 @@ import { assert } from "chai";
 describe("counter-contract", () => {
   anchor.setProvider(anchor.AnchorProvider.env());
   const provider = anchor.getProvider();
+  const signer = provider.wallet;
   const program = anchor.workspace.counter_contract as Program<CounterContract>;
 
   let counterPda: anchor.web3.PublicKey;
@@ -24,6 +25,7 @@ describe("counter-contract", () => {
         user: provider.publicKey,
         systemProgram: anchor.web3.SystemProgram.programId,
       })
+      .signers([signer.payer])
       .rpc();
 
     const counterAccount = await program.account.counter.fetch(counterPda);
@@ -40,6 +42,7 @@ describe("counter-contract", () => {
         counter: counterPda,
         authority: provider.publicKey,
       })
+      .signers([signer.payer])
       .rpc();
 
     const counterAccount = await program.account.counter.fetch(counterPda);
@@ -54,6 +57,7 @@ describe("counter-contract", () => {
         counter: counterPda,
         authority: provider.publicKey,
       })
+      .signers([signer.payer])
       .rpc();
 
     const counterAccount = await program.account.counter.fetch(counterPda);
