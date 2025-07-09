@@ -34,7 +34,6 @@ pub struct Initialize<'info>{
     #[account(mut)]
     pub user : Signer<'info>,
     pub system_program : Program<'info, System>,
-
 }
 
 #[derive(Accounts)]
@@ -42,7 +41,8 @@ pub struct Update<'info>{
     // this only needs to derive the pda and the user account
     #[account(
         mut, 
-        seeds = [b"greeting",authority.key().as_ref()], bump
+        seeds = [b"greeting",authority.key().as_ref()], 
+        bump
     )]
     pub base_account : Account<'info, GreetingAccount>,
     pub authority : Signer<'info>,
